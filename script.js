@@ -22,57 +22,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Contact Form Validation
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        // Clear previous errors
+        clearErrors();
+        
+        // Get form values
+        const name = document.getElementById('name').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        
+        let isValid = true;
+        
+        // Validate name
+        if (name === '') {
+            showError('name', 'Name is required');
+            isValid = false;
+        }
+        
+        // Validate company
+        if (company === '') {
+            showError('company', 'Company is required');
+            isValid = false;
+        }
+        
+        // Validate email
+        if (email === '') {
+            showError('email', 'Email is required');
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            showError('email', 'Please enter a valid email address');
+            isValid = false;
+        }
+        
+        // Validate phone
+        if (phone === '') {
+            showError('phone', 'Phone is required');
+            isValid = false;
+        }
+        
+        // If form is NOT valid, prevent submission
+        if (!isValid) {
             e.preventDefault();
-            
-            // Clear previous errors
-            clearErrors();
-            
-            // Get form values
-            const name = document.getElementById('name').value.trim();
-            const company = document.getElementById('company').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const message = document.getElementById('message').value.trim();
-            
-            let isValid = true;
-            
-            // Validate name
-            if (name === '') {
-                showError('name', 'Name is required');
-                isValid = false;
-            }
-            
-            // Validate company
-            if (company === '') {
-                showError('company', 'Company is required');
-                isValid = false;
-            }
-            
-            // Validate email
-            if (email === '') {
-                showError('email', 'Email is required');
-                isValid = false;
-            } else if (!isValidEmail(email)) {
-                showError('email', 'Please enter a valid email address');
-                isValid = false;
-            }
-            
-            // Validate phone
-            if (phone === '') {
-                showError('phone', 'Phone is required');
-                isValid = false;
-            }
-            
-            // If form is valid, submit (in production, this would send to a server)
-            if (isValid) {
-                alert('Thank you for your inquiry. We will be in touch shortly.');
-                contactForm.reset();
-            }
-        });
-    }
+        }
+        // If valid, form will submit to Formspree automatically
+    });
+}
     
     // Helper function to show error
     function showError(fieldId, message) {
@@ -154,4 +151,5 @@ if (carouselTrack) {
         const nextIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
         updateCarousel(nextIndex);
     }, 5000);
+
 }
