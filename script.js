@@ -21,10 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Contact Form Validation
+   // Contact Form Validation
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default first
+        
         // Clear previous errors
         clearErrors();
         
@@ -63,14 +65,12 @@ if (contactForm) {
             isValid = false;
         }
         
-        // If form is NOT valid, prevent submission
-        if (!isValid) {
-            e.preventDefault();
+        // If form IS valid, submit it
+        if (isValid) {
+            contactForm.submit(); // Actually submit to Formspree
         }
-        // If valid, form will submit to Formspree automatically
     });
 }
-    
     // Helper function to show error
     function showError(fieldId, message) {
         const input = document.getElementById(fieldId);
@@ -153,3 +153,4 @@ if (carouselTrack) {
     }, 5000);
 
 }
+
